@@ -114,3 +114,117 @@ main {
   padding: 0 16px 40px;
 }
 
+
+/* ── SETUP PANEL ── */
+#setup-panel {
+  background: linear-gradient(135deg, rgba(12,18,32,.95), rgba(5,8,15,.98));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 40px 36px;
+  margin: 20px auto;
+  max-width: 560px;
+  box-shadow: var(--glow), inset 0 1px 0 rgba(0,212,255,.1);
+}
+
+.panel-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--accent);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.config-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.config-field label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(200,221,245,.5);
+  text-transform: uppercase;
+}
+
+.config-field input[type=number] {
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Orbitron', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  -moz-appearance: textfield;
+}
+
+.config-field input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.config-field input[type=number]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,212,255,.12);
+}
+
+.config-full {
+  grid-column: 1 / -1;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 16px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--accent), #007aff);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s, filter .15s;
+  box-shadow: 0 4px 24px rgba(0,212,255,.3);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,212,255,.5);
+  filter: brightness(1.1);
+}
+
+.btn-start:active {
+  transform: translateY(0);
+}
+
+.error-msg {
+  color: var(--accent2);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 10px;
+  min-height: 18px;
+  transition: opacity .3s;
+}
