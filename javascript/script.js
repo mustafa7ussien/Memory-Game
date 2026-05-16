@@ -13,3 +13,14 @@ const ICONS = [
   'images/i11.jpeg',
   'images/i12.jpeg'
 ];
+
+
+// ── STATE ──────────────────────────────────────────────────
+let state = {
+  rows: 4, cols: 4, timeLimit: 60,
+  totalPairs: 0, matchedPairs: 0,
+  moves: 0, timeLeft: 0,
+  timerInterval: null,
+  firstCard: null, secondCard: null,
+  isLocked: false, gameStarted: false
+};
