@@ -67,3 +67,45 @@ function startGame() {
   const rows = parseInt(cfgRows.value);
   const cols = parseInt(cfgCols.value);
   const time = parseInt(cfgTime.value);
+
+ // Validation
+  if (isNaN(rows) || rows < 2 || rows > 8 ||
+      isNaN(cols) || cols < 2 || cols > 8) {
+    showError('Rows and columns must be between 2 and 8.');
+    return;
+  }
+  if ((rows * cols) % 2 !== 0) {
+    showError('Rows × Columns must be EVEN (need pairs!)');
+    return;
+  }
+  if (isNaN(time) || time < 10) {
+    showError('Time limit must be at least 10 seconds.');
+    return;
+  }
+  const totalCards = rows * cols;
+  const needed     = totalCards / 2;
+  if (needed > ICONS.length) {
+    showError(`Too many cards — max ${ICONS.length * 2} total cells.`);
+    return;
+  }
+  clearError();
+
+  state.rows         = rows;
+  state.cols         = cols;
+  state.timeLimit    = time;
+  state.totalPairs   = needed;
+  state.matchedPairs = 0;
+  state.moves        = 0;
+  state.firstCard    = null;
+  state.secondCard   = null;
+  state.isLocked     = true;
+  state.gameStarted  = false;
+
+  buildBoard(rows, cols, needed);
+  showGame();
+  runPreview(totalCards, () => {
+    state.isLocked    = false;
+    state.gameStarted = true;
+    startTimer();
+  });
+}
