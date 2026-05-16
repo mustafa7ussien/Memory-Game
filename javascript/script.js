@@ -59,3 +59,11 @@ function fmt(s) {
   const sec = (s % 60).toString().padStart(2, '0');
   return m + ':' + sec;
 }
+
+// ── START GAME ─────────────────────────────────────────────
+document.getElementById('btn-start').onclick = startGame;
+
+function startGame() {
+  const rows = parseInt(cfgRows.value);
+  const cols = parseInt(cfgCols.value);
+  const time = parseInt(cfgTime.value);
