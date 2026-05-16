@@ -24,3 +24,22 @@ let state = {
   firstCard: null, secondCard: null,
   isLocked: false, gameStarted: false
 };
+
+// ── DOM REFS ───────────────────────────────────────────────
+const setupPanel    = document.getElementById('setup-panel');
+const gameHud       = document.getElementById('game-hud');
+const boardWrap     = document.getElementById('board-wrap');
+const boardEl       = document.getElementById('board');
+const overlay       = document.getElementById('overlay');
+const errorMsg      = document.getElementById('error-msg');
+const previewBanner = document.getElementById('preview-banner');
+
+const hudTimer    = document.getElementById('hud-timer');
+const hudPairs    = document.getElementById('hud-pairs');
+const hudMoves    = document.getElementById('hud-moves');
+const progressFill = document.getElementById('progress-fill');
+const timerBlock   = document.getElementById('timer-block');
+
+const cfgRows  = document.getElementById('cfg-rows');
+const cfgCols  = document.getElementById('cfg-cols');
+const cfgTime  = document.getElementById('cfg-time');
