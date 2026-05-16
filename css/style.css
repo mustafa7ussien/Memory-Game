@@ -228,3 +228,89 @@ main {
   min-height: 18px;
   transition: opacity .3s;
 }
+
+
+/* ── GAME HUD ── */
+#game-hud {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 14px 0;
+  padding: 0 4px;
+  flex-wrap: wrap;
+}
+
+.hud-block {
+  background: rgba(12,18,32,.8);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  min-width: 110px;
+}
+
+.hud-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(200,221,245,.4);
+  text-transform: uppercase;
+}
+
+.hud-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+#timer-block .hud-value {
+  color: var(--gold);
+}
+
+#timer-block.danger .hud-value {
+  color: #ff3b3b;
+  animation: pulse-danger .5s ease infinite alternate;
+}
+
+@keyframes pulse-danger {
+  to { opacity: .5; }
+}
+
+.progress-bar-wrap {
+  flex: 1;
+  min-width: 140px;
+  height: 8px;
+  background: rgba(255,255,255,.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--matched), var(--accent));
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 0 12px var(--matched);
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: rgba(200,221,245,.5);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+
+.btn-back:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
