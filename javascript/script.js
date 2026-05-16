@@ -43,3 +43,12 @@ const timerBlock   = document.getElementById('timer-block');
 const cfgRows  = document.getElementById('cfg-rows');
 const cfgCols  = document.getElementById('cfg-cols');
 const cfgTime  = document.getElementById('cfg-time');
+
+// ── SHUFFLE ────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
