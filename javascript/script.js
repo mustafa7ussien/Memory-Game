@@ -167,6 +167,55 @@ function runPreview(totalCards, onComplete) {
   }, 1000);
 }
 
+// ── CARD CLICK ─────────────────────────────────────────────
+boardEl.addEventListener('click', (e) => {
+  if (state.isLocked || !state.gameStarted) return;
+
+  const card = e.target.closest('.card');
+  if (!card) return;
+  if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+  card.classList.add('flipped');
+
+  if (!state.firstCard) {
+    state.firstCard = card;
+    return;
+  }
+
+  state.secondCard = card;
+  state.isLocked   = true;
+  state.moves++;
+  updateHud();
+
+  const icon1 = state.firstCard.dataset.icon;
+  const icon2 = state.secondCard.dataset.icon;
+
+  if (icon1 === icon2) {
+    // Match found
+    state.firstCard.classList.add('matched');
+    state.secondCard.classList.add('matched');
+    state.matchedPairs++;
+    updateHud();
+
+    state.firstCard  = null;
+    state.secondCard = null;
+    state.isLocked   = false;
+
+    if (state.matchedPairs === state.totalPairs) {
+      endGame(true);
+    }
+  } else {
+    // No match
+    setTimeout(() => {
+      state.firstCard.classList.remove('flipped');
+      state.secondCard.classList.remove('flipped');
+      state.firstCard  = null;
+      state.secondCard = null;
+      state.isLocked   = false;
+    }, 800);
+  }
+});
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
