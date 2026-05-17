@@ -142,6 +142,31 @@ function buildBoard(rows, cols, pairCount) {
   });
 }
 
+// ── PREVIEW ────────────────────────────────────────────────
+function runPreview(totalCards, onComplete) {
+  const allCards = Array.from(boardEl.querySelectorAll('.card'));
+  allCards.forEach(c => c.classList.add('flipped'));
+
+  const duration = Math.max(3, Math.ceil(totalCards / 4));
+  let countdown  = duration;
+
+  const countdownEl = document.getElementById('preview-countdown');
+  previewBanner.style.display = 'block';
+  countdownEl.textContent = countdown;
+
+  const countInterval = setInterval(() => {
+    countdown--;
+    if (countdown > 0) {
+      countdownEl.textContent = countdown;
+    } else {
+      clearInterval(countInterval);
+      previewBanner.style.display = 'none';
+      allCards.forEach(c => c.classList.remove('flipped'));
+      if (onComplete) onComplete();
+    }
+  }, 1000);
+}
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
