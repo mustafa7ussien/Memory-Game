@@ -109,3 +109,84 @@ function startGame() {
     startTimer();
   });
 }
+
+// ── END GAME ───────────────────────────────────────────────
+function endGame(won) {
+  stopTimer();
+  state.isLocked = true;
+  state.gameStarted = false;
+
+  // Disable all remaining cards
+  boardEl.querySelectorAll('.card').forEach(c => c.classList.add('disabled'));
+
+  const icon = document.getElementById('ov-icon');
+  const title = document.getElementById('ov-title');
+  const stats = document.getElementById('ov-stats');
+
+  if (won) {
+    icon.textContent = '🏆';
+    title.textContent = 'yaaaa You Win';
+    title.className = 'overlay-title win';
+    const timeUsed = state.timeLimit - state.timeLeft;
+    stats.innerHTML =
+      `All ${state.totalPairs} pairs matched!<br>` +
+      `Time used: ${fmt(timeUsed)} &nbsp;|&nbsp; Moves: ${state.moves}<br>` +
+      `Board: ${state.rows}×${state.cols}`;
+  } else {
+    icon.textContent = '💀';
+    title.textContent = 'GAME OVER';
+    title.className = 'overlay-title lose';
+    stats.innerHTML =
+      `Time's up! You matched ${state.matchedPairs} of ${state.totalPairs} pairs.<br>` +
+      `Moves made: ${state.moves}<br>` +
+      `Board: ${state.rows}×${state.cols}`;
+  }
+
+  overlay.classList.add('show');
+}
+
+// ── OVERLAY BUTTONS ────────────────────────────────────────
+document.getElementById('btn-again').onclick = () => {
+  overlay.classList.remove('show');
+  startGame();
+};
+
+document.getElementById('btn-ov-setup').onclick = goSetup;
+document.getElementById('btn-back').onclick = goSetup;
+
+function goSetup() {
+  stopTimer();
+  overlay.classList.remove('show');
+  showSetup();
+}
+
+// ── SHOW / HIDE ────────────────────────────────────────────
+function showGame() {
+  setupPanel.style.display = 'none';
+  gameHud.style.display = 'flex';
+  boardWrap.style.display = 'block';
+
+  hudPairs.textContent = '0/' + state.totalPairs;
+  hudMoves.textContent = '0';
+  hudTimer.textContent = fmt(state.timeLimit);
+  progressFill.style.width = '0%';
+  timerBlock.classList.remove('danger');
+}
+
+function showSetup() {
+  setupPanel.style.display = 'block';
+  gameHud.style.display = 'none';
+  boardWrap.style.display = 'none';
+  previewBanner.style.display = 'none';
+}
+
+function showError(msg) {
+  errorMsg.textContent = '⚠ ' + msg;
+}
+
+function clearError() {
+  errorMsg.textContent = '';
+}
+
+// ── INIT ───────────────────────────────────────────────────
+showSetup();

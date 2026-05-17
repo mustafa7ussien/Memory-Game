@@ -314,3 +314,157 @@ main {
   border-color: var(--accent2);
   color: var(--accent2);
 }
+
+/* ── OVERLAY (Game Over / Win) ── */
+#overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5, 8, 15, .88);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+#overlay.show {
+  display: flex;
+}
+
+.overlay-box {
+  background: linear-gradient(135deg, rgba(12, 18, 32, .98), rgba(5, 8, 15, .99));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 56px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 0 60px rgba(0, 212, 255, .15);
+  animation: pop-in .4s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(.7);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.overlay-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.overlay-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.overlay-title.win {
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(255, 215, 0, .5);
+}
+
+.overlay-title.lose {
+  color: var(--accent2);
+  text-shadow: 0 0 30px rgba(255, 107, 53, .5);
+}
+
+.overlay-stats {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: rgba(200, 221, 245, .5);
+  margin-bottom: 32px;
+  line-height: 1.8;
+}
+
+.btn-play-again {
+  padding: 14px 36px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--accent), #007aff);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 24px rgba(0, 212, 255, .3);
+  margin: 6px;
+}
+
+.btn-play-again:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 212, 255, .5);
+}
+
+.btn-setup {
+  padding: 14px 36px;
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: rgba(200, 221, 245, .6);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+  margin: 6px;
+}
+
+.btn-setup:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── PREVIEW BANNER ── */
+#preview-banner {
+  display: none;
+  text-align: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  margin: 8px 0 -4px;
+  animation: blink-banner 1s ease infinite alternate;
+}
+
+@keyframes blink-banner {
+  to {
+    opacity: .3;
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .card {
+    width: 68px;
+    height: 84px;
+  }
+
+  .card-front-face {
+    font-size: 30px;
+  }
+
+  .config-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overlay-box {
+    padding: 32px 24px;
+  }
+
+  #setup-panel {
+    padding: 24px 20px;
+  }
+}
