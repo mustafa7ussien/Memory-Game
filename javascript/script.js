@@ -216,6 +216,36 @@ boardEl.addEventListener('click', (e) => {
   }
 });
 
+// ── TIMER ──────────────────────────────────────────────────
+function startTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timeLeft = state.timeLimit;
+  updateHud();
+
+  state.timerInterval = setInterval(() => {
+    state.timeLeft--;
+    updateHud();
+
+    if (state.timeLeft <= 10 && state.timeLeft > 0) {
+      timerBlock.classList.add('danger');
+    }
+
+    if (state.timeLeft <= 0) {
+      clearInterval(state.timerInterval);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+function updateHud() {
+  hudTimer.textContent = fmt(state.timeLeft);
+  hudPairs.textContent = `${state.matchedPairs}/${state.totalPairs}`;
+  hudMoves.textContent = state.moves;
+
+  const progress = (state.matchedPairs / state.totalPairs) * 100;
+  progressFill.style.width = progress + '%';
+}
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
