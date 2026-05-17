@@ -411,6 +411,59 @@ main {
 }
 
 
+/* ── PREVIEW BANNER ── */
+#preview-banner {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(12,18,32,.98), rgba(5,8,15,.99));
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 40px 60px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0,212,255,.6), inset 0 2px 0 rgba(0,212,255,.2);
+  animation: banner-enter .5s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes banner-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.preview-msg {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.preview-countdown {
+  font-family: 'Orbitron', monospace;
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(255,215,0,.6);
+  animation: countdown-pulse 1s ease infinite;
+}
+
+@keyframes countdown-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: .8; }
+}
+
+
 /* ── OVERLAY (Game Over / Win) ── */
 #overlay {
   display: none;
