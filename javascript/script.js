@@ -110,6 +110,38 @@ function startGame() {
   });
 }
 
+// ── BUILD BOARD ────────────────────────────────────────────
+function buildBoard(rows, cols, pairCount) {
+  const selectedIcons = ICONS.slice(0, pairCount);
+  const cardData      = [...selectedIcons, ...selectedIcons];
+  shuffle(cardData);
+
+  boardEl.innerHTML = '';
+  boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  boardEl.style.gridTemplateRows    = `repeat(${rows}, 1fr)`;
+
+  cardData.forEach((icon, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.icon = icon;
+    card.dataset.id   = index;
+
+    const back = document.createElement('div');
+    back.className = 'card-face card-back';
+
+    const front = document.createElement('div');
+    front.className = 'card-face card-front';
+    const img = document.createElement('img');
+    img.src = icon;
+    img.alt = 'Card';
+    front.appendChild(img);
+
+    card.appendChild(back);
+    card.appendChild(front);
+    boardEl.appendChild(card);
+  });
+}
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
