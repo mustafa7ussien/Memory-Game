@@ -246,6 +246,13 @@ function updateHud() {
   progressFill.style.width = progress + '%';
 }
 
+function stopTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
@@ -314,6 +321,7 @@ function showSetup() {
   gameHud.style.display = 'none';
   boardWrap.style.display = 'none';
   previewBanner.style.display = 'none';
+  overlay.classList.remove('show');
 }
 
 function showError(msg) {
