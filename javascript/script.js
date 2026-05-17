@@ -190,3 +190,20 @@ function clearError() {
 
 // ── INIT ───────────────────────────────────────────────────
 showSetup();
+
+// ── TEAM PAGE ─────────────────────────────────────────────
+const teamBtn = document.getElementById('team-btn');
+
+const teamPage = document.getElementById('team-page');
+
+const closeTeam = document.getElementById('close-team');
+
+teamBtn.addEventListener('click', () => {
+
+  teamPage.classList.add('show');
+});
+
+closeTeam.addEventListener('click', () => {
+
+  teamPage.classList.remove('show');
+});

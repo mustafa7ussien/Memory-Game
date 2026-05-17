@@ -468,3 +468,125 @@ main {
     padding: 24px 20px;
   }
 }
+
+/* ── TEAM PAGE ── */
+.team-btn {
+
+  width: 100%;
+
+  margin-top: 15px;
+
+  padding: 14px;
+
+  border: 1px solid rgba(0, 212, 255, .3);
+
+  background: transparent;
+
+  color: #00d4ff;
+
+  border-radius: 10px;
+
+  font-family: 'Orbitron', monospace;
+
+  letter-spacing: 3px;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.team-btn:hover {
+
+  background: rgba(0, 212, 255, .1);
+}
+
+#team-page {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, .85);
+
+  backdrop-filter: blur(8px);
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 999;
+}
+
+#team-page.show {
+
+  display: flex;
+}
+
+.team-box {
+
+  width: 90%;
+
+  max-width: 500px;
+
+  background: #08111f;
+
+  border: 1px solid rgba(0, 212, 255, .2);
+
+  border-radius: 20px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  box-shadow: 0 0 40px rgba(0, 212, 255, .2);
+}
+
+.team-box h2 {
+
+  font-family: 'Orbitron', monospace;
+
+  color: #00d4ff;
+
+  margin-bottom: 25px;
+
+  letter-spacing: 4px;
+}
+
+.team-box ul {
+
+  list-style: none;
+
+  padding: 0;
+}
+
+.team-box li {
+
+  margin: 15px 0;
+
+  font-size: 22px;
+
+  color: white;
+
+  letter-spacing: 1px;
+}
+
+#close-team {
+
+  margin-top: 30px;
+
+  padding: 14px 30px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #00d4ff, #0077ff);
+
+  color: black;
+
+  font-family: 'Orbitron', monospace;
+
+  cursor: pointer;
+}
