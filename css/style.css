@@ -315,6 +315,155 @@ main {
   color: var(--accent2);
 }
 
+
+/* ── BOARD ── */
+#board-wrap {
+  display: none;
+  position: relative;
+  width: 100%;
+  margin: 20px auto;
+  perspective: 1000px;
+}
+
+#board {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(12,18,32,.6);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+
+/* ── CARD ── */
+.card {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  pointer-events: none;
+  animation: match-pulse .6s ease;
+}
+
+@keyframes match-pulse {
+  0%, 100% { transform: scale(1) rotateY(180deg); }
+  50% { transform: scale(1.1) rotateY(180deg); }
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  transition: border-color .3s, box-shadow .3s;
+}
+
+.card-back {
+  background: linear-gradient(135deg, var(--card-back), #1a2e50);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.3);
+}
+
+.card-back::before {
+  content: '?';
+  font-family: 'Orbitron', monospace;
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(0,212,255,.3);
+  text-shadow: 0 0 20px rgba(0,212,255,.2);
+}
+
+.card-front {
+  background: var(--card-front);
+  transform: rotateY(180deg);
+  box-shadow: 0 4px 16px rgba(0,0,0,.5);
+}
+
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card.matched .card-face {
+  border-color: var(--matched);
+  box-shadow: 0 0 20px rgba(0,255,136,.5);
+}
+
+.card:not(.flipped):not(.matched):hover .card-back {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(0,212,255,.3), inset 0 2px 8px rgba(0,0,0,.3);
+}
+
+
+/* ── PREVIEW BANNER ── */
+#preview-banner {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(12,18,32,.98), rgba(5,8,15,.99));
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 40px 60px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0,212,255,.6), inset 0 2px 0 rgba(0,212,255,.2);
+  animation: banner-enter .5s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes banner-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.preview-msg {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.preview-countdown {
+  font-family: 'Orbitron', monospace;
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(255,215,0,.6);
+  animation: countdown-pulse 1s ease infinite;
+}
+
+@keyframes countdown-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: .8; }
+}
+
+
 /* ── OVERLAY (Game Over / Win) ── */
 #overlay {
   display: none;

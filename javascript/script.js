@@ -110,6 +110,142 @@ function startGame() {
   });
 }
 
+// ── BUILD BOARD ────────────────────────────────────────────
+function buildBoard(rows, cols, pairCount) {
+  const selectedIcons = ICONS.slice(0, pairCount);
+  const cardData      = [...selectedIcons, ...selectedIcons];
+  shuffle(cardData);
+
+  boardEl.innerHTML = '';
+  boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  boardEl.style.gridTemplateRows    = `repeat(${rows}, 1fr)`;
+
+  cardData.forEach((icon, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.icon = icon;
+    card.dataset.id   = index;
+
+    const back = document.createElement('div');
+    back.className = 'card-face card-back';
+
+    const front = document.createElement('div');
+    front.className = 'card-face card-front';
+    const img = document.createElement('img');
+    img.src = icon;
+    img.alt = 'Card';
+    front.appendChild(img);
+
+    card.appendChild(back);
+    card.appendChild(front);
+    boardEl.appendChild(card);
+  });
+}
+
+// ── PREVIEW ────────────────────────────────────────────────
+function runPreview(totalCards, onComplete) {
+  const allCards = Array.from(boardEl.querySelectorAll('.card'));
+  allCards.forEach(c => c.classList.add('flipped'));
+
+  const duration = Math.max(3, Math.ceil(totalCards / 4));
+  let countdown  = duration;
+
+  const countdownEl = document.getElementById('preview-countdown');
+  previewBanner.style.display = 'block';
+  countdownEl.textContent = countdown;
+
+  const countInterval = setInterval(() => {
+    countdown--;
+    if (countdown > 0) {
+      countdownEl.textContent = countdown;
+    } else {
+      clearInterval(countInterval);
+      previewBanner.style.display = 'none';
+      allCards.forEach(c => c.classList.remove('flipped'));
+      if (onComplete) onComplete();
+    }
+  }, 1000);
+}
+
+// ── CARD CLICK ─────────────────────────────────────────────
+boardEl.addEventListener('click', (e) => {
+  if (state.isLocked || !state.gameStarted) return;
+
+  const card = e.target.closest('.card');
+  if (!card) return;
+  if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+  card.classList.add('flipped');
+
+  if (!state.firstCard) {
+    state.firstCard = card;
+    return;
+  }
+
+  state.secondCard = card;
+  state.isLocked   = true;
+  state.moves++;
+  updateHud();
+
+  const icon1 = state.firstCard.dataset.icon;
+  const icon2 = state.secondCard.dataset.icon;
+
+  if (icon1 === icon2) {
+    // Match found
+    state.firstCard.classList.add('matched');
+    state.secondCard.classList.add('matched');
+    state.matchedPairs++;
+    updateHud();
+
+    state.firstCard  = null;
+    state.secondCard = null;
+    state.isLocked   = false;
+
+    if (state.matchedPairs === state.totalPairs) {
+      endGame(true);
+    }
+  } else {
+    // No match
+    setTimeout(() => {
+      state.firstCard.classList.remove('flipped');
+      state.secondCard.classList.remove('flipped');
+      state.firstCard  = null;
+      state.secondCard = null;
+      state.isLocked   = false;
+    }, 800);
+  }
+});
+
+// ── TIMER ──────────────────────────────────────────────────
+function startTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timeLeft = state.timeLimit;
+  updateHud();
+
+  state.timerInterval = setInterval(() => {
+    state.timeLeft--;
+    updateHud();
+
+    if (state.timeLeft <= 10 && state.timeLeft > 0) {
+      timerBlock.classList.add('danger');
+    }
+
+    if (state.timeLeft <= 0) {
+      clearInterval(state.timerInterval);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+function updateHud() {
+  hudTimer.textContent = fmt(state.timeLeft);
+  hudPairs.textContent = `${state.matchedPairs}/${state.totalPairs}`;
+  hudMoves.textContent = state.moves;
+
+  const progress = (state.matchedPairs / state.totalPairs) * 100;
+  progressFill.style.width = progress + '%';
+}
+
 // ── END GAME ───────────────────────────────────────────────
 function endGame(won) {
   stopTimer();
